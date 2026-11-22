@@ -46,6 +46,8 @@ public class HudData {
 		public int points;
 		public int gamePoints;
 		public int index;
+		/** The team's icon as a text component (usually a resource-pack glyph); null if none. */
+		public com.google.gson.JsonElement icon;
 		public List<Member> members = new ArrayList<>();
 	}
 

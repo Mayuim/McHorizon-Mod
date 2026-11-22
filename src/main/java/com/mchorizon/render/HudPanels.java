@@ -138,8 +138,8 @@ public final class HudPanels {
 			int place = inGame && team.gamePlace != null ? team.gamePlace : team.rank;
 			int of = inGame && team.gameOf != null ? team.gameOf : team.of;
 			int pts = inGame ? team.gamePoints : team.points;
-			Ui.swatch(g, x + Ui.PAD, cy, tc);
-			Ui.text(g, "TEAM", x + Ui.PAD + 9, cy, tc);
+			int iw = TeamIcons.drawSmall(g, team, x + Ui.PAD, cy);
+			Ui.text(g, "TEAM", x + Ui.PAD + iw + 3, cy, tc);
 			Ui.textRight(g, team.hidden ? "#? / " + of : "#" + place + " / " + of, x + W - Ui.PAD, cy, Ui.LABEL);
 			cy += Ui.ROW;
 			Ui.row(g, x, W, cy, "Team points", Ui.LABEL, team.hidden && !inGame ? "????" : Ui.number(pts), Ui.GOLD);
@@ -153,7 +153,7 @@ public final class HudPanels {
 				int c2 = Ui.color(t.color);
 				String name = Ui.clip(t.name, W / 2 - 4);
 				Ui.textRight(g, name, x + W - Ui.PAD, cy, c2);
-				Ui.swatch(g, x + W - Ui.PAD - Ui.width(name) - 9, cy, c2);
+				TeamIcons.drawSmall(g, t, x + W - Ui.PAD - Ui.width(name) - TeamIcons.width(t) - 3, cy);
 				cy += Ui.ROW;
 			}
 		}
@@ -161,40 +161,48 @@ public final class HudPanels {
 	}
 
 	// ---------- YOUR TEAM ----------
+	// MCC-style card: team-colored frame, big team icon, name + points, place, gap to the team ahead.
 
 	private static int yourTeam(GuiGraphics g, HudData d, int x, int y) {
 		HudData.MyTeam t = d.team;
 		int tc = Ui.color(t.color);
-		boolean extra = (t.behindTeam != null && t.behindBy != null) || (t.leadTeam != null && t.leadBy != null);
-		int rows = 2 + (extra ? 1 : 0);
-		int h = Ui.HEADER + 3 + rows * Ui.ROW + 2;
-		int cy = Ui.panel(g, x, y, W, h, "YOUR TEAM", tc);
+		boolean behind = t.behindTeam != null && t.behindBy != null;
+		boolean lead = !behind && t.leadTeam != null && t.leadBy != null;
+		int icon = 20;
+		int h = 11 + icon + 3 + ((behind || lead) ? Ui.ROW : 0) + 2;
 
-		Ui.swatch(g, x + Ui.PAD, cy, tc);
+		g.fill(x, y, x + W, y + h, Ui.BG);
+		Ui.outline(g, x, y, x + W, y + h, tc);
+		Ui.text(g, "YOUR TEAM", x + 4, y + 2, 0xFF9FE8FF);
+
+		int iy = y + 11;
+		TeamIcons.drawBig(g, t, x + 4, iy, icon);
+
+		int tx = x + 4 + icon + 4;
 		String pts = t.hidden ? "????" : Ui.number(t.points);
-		Ui.text(g, Ui.clip(t.name, W - Ui.width(pts) - 22), x + Ui.PAD + 9, cy, tc);
-		Ui.textRight(g, pts, x + W - Ui.PAD, cy, Ui.GOLD);
-		cy += Ui.ROW;
+		int coin = 5;
+		Ui.text(g, Ui.clip(t.name, x + W - 4 - Ui.width(pts) - coin - 3 - tx), tx, iy + 1, tc);
+		Ui.textRight(g, pts, x + W - 4 - coin - 2, iy + 1, 0xFFFFFFFF);
+		g.fill(x + W - 4 - coin, iy + 2, x + W - 4, iy + 7, Ui.GOLD);
 
 		String place = t.hidden || t.rank <= 0 ? "Hidden" : Ui.ordinal(t.rank) + " place";
-		Ui.text(g, place, x + Ui.PAD, cy, Ui.LABEL);
-		if (t.of > 0) {
-			Ui.textRight(g, "of " + t.of, x + W - Ui.PAD, cy, Ui.MUTED);
-		}
-		cy += Ui.ROW;
+		Ui.text(g, place, tx, iy + 11, 0xFFFFFFFF);
 
-		if (t.behindTeam != null && t.behindBy != null) {
+		int ly = iy + icon + 2;
+		if (behind) {
 			HudData.Team ahead = d.teamById(t.behindTeam);
-			String name = ahead == null ? t.behindTeam : ahead.name;
-			Ui.text(g, Ui.number(t.behindBy) + " behind ", x + Ui.PAD, cy, Ui.MUTED);
-			int nx = x + Ui.PAD + Ui.width(Ui.number(t.behindBy) + " behind ");
-			Ui.text(g, Ui.clip(name, x + W - Ui.PAD - nx), nx, cy, ahead == null ? Ui.LABEL : Ui.color(ahead.color));
-		} else if (t.leadTeam != null && t.leadBy != null) {
+			String who = ahead == null ? t.behindTeam : ahead.name;
+			String lead1 = Ui.number(t.behindBy) + " behind ";
+			Ui.text(g, lead1, x + 4, ly, Ui.MUTED);
+			Ui.text(g, Ui.clip(who, W - 8 - Ui.width(lead1)), x + 4 + Ui.width(lead1), ly,
+					ahead == null ? Ui.MUTED : Ui.color(ahead.color));
+		} else if (lead) {
 			HudData.Team next = d.teamById(t.leadTeam);
-			String name = next == null ? t.leadTeam : next.name;
-			Ui.text(g, Ui.number(t.leadBy) + " ahead of ", x + Ui.PAD, cy, 0xFF55FF55);
-			int nx = x + Ui.PAD + Ui.width(Ui.number(t.leadBy) + " ahead of ");
-			Ui.text(g, Ui.clip(name, x + W - Ui.PAD - nx), nx, cy, next == null ? Ui.LABEL : Ui.color(next.color));
+			String who = next == null ? t.leadTeam : next.name;
+			String lead1 = Ui.number(t.leadBy) + " ahead of ";
+			Ui.text(g, lead1, x + 4, ly, 0xFF55FF55);
+			Ui.text(g, Ui.clip(who, W - 8 - Ui.width(lead1)), x + 4 + Ui.width(lead1), ly,
+					next == null ? Ui.MUTED : Ui.color(next.color));
 		}
 		return y + h;
 	}
@@ -217,9 +225,9 @@ public final class HudPanels {
 				g.fill(x + 2, cy - 1, x + W - 2, cy + Ui.ROW - 1, 0x40FFFFFF);
 				Ui.outline(g, x + 2, cy - 1, x + W - 2, cy + Ui.ROW - 1, tc);
 			}
-			Ui.swatch(g, x + Ui.PAD, cy, tc);
+			int iw = TeamIcons.drawSmall(g, t, x + Ui.PAD, cy);
 			String pts = "+" + Ui.number(row.points);
-			Ui.text(g, Ui.clip(t.name, W - Ui.width(pts) - 22), x + Ui.PAD + 9, cy, tc);
+			Ui.text(g, Ui.clip(t.name, W - Ui.width(pts) - iw - 16), x + Ui.PAD + iw + 3, cy, tc);
 			Ui.textRight(g, pts, x + W - Ui.PAD, cy, Ui.GOLD);
 			cy += Ui.ROW;
 		}

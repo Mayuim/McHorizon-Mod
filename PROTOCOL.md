@@ -10,7 +10,7 @@ Sent by `dev.mcevents.display.HorizonHud` in [MCEVENT](https://github.com/Mayuim
   "event": { "name", "title", "active", "paused", "mini", "phase", "phaseId",
              "round", "rounds", "multiplier", "timeLeft" },
   "game":  { "active", "name", "color": "#RRGGBB", "map", "round", "rounds", "timeLeft" },
-  "teams": [ { "id", "name", "color", "hidden", "rank", "points", "gamePoints", "index",
+  "teams": [ { "id", "name", "color", "hidden", "rank", "points", "gamePoints", "index", "icon": <text component JSON>,
                "members": [ { "uuid", "name", "online", "points" } ] } ],
   "live":  [ { "id", "points" } ],            // this game's standings, best first
   "you":   { "name", "spectator", "points", "place", "of",

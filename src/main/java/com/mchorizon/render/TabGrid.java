@@ -100,6 +100,7 @@ public final class TabGrid {
 		String rank = t.hidden || t.rank <= 0 ? "?" : String.valueOf(t.rank);
 		Ui.text(g, rank, x + 5, y + 2, 0xFFFFFFFF);
 		int nx = x + 7 + Ui.width(rank) + 3;
+		nx += TeamIcons.drawSmall(g, t, nx, y + 2) + 3;
 		String pts = t.hidden ? "????" : Ui.number(t.points);
 		String gameBit = d.game.active ? " +" + Ui.number(t.gamePoints) : "";
 		int ptsW = Ui.width(pts) + Ui.width(gameBit);
