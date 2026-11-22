@@ -4,7 +4,9 @@
 	"version": "${version}",
 	"name": "MCHorizons",
 	"description": "The MC Horizons event HUD: profile, game, team and live panels, plus the team overview on Tab.",
-	"authors": ["Mayuim"],
+	"authors": [
+		"Mayuim"
+	],
 	"contact": {
 		"homepage": "https://github.com/Mayuim/McHorizon-Mod"
 	},
@@ -12,12 +14,17 @@
 	"icon": "assets/mchorizon/icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"client": ["com.mchorizon.HorizonClient"]
+		"client": [
+			"com.mchorizon.HorizonClient"
+		]
 	},
 	"depends": {
 		"fabricloader": ">=0.17.3",
 		"minecraft": "1.21.11",
 		"java": ">=21",
 		"fabric-api": "*"
-	}
+	},
+	"mixins": [
+		"mchorizon.mixins.json"
+	]
 }

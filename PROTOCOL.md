@@ -17,7 +17,8 @@ Sent by `dev.mcevents.display.HorizonHud` in [MCEVENT](https://github.com/Mayuim
              "gamePoints", "gamePlace", "gameOf",            // only during a game
              "tier", "events", "lifetime", "bestPlace", "overallRank", "overallOf" },  // from StatsStore
   "team":  { ...team fields..., "of", "behindTeam", "behindBy", "leadTeam", "leadBy",
-             "gamePoints", "gamePlace", "gameOf", "tiedWith": ["teamId"] }
+             "gamePoints", "gamePlace", "gameOf", "tiedWith": ["teamId"],
+             "tabBox": { "line", "lines", "x", "width", "lineWidth" } }   // team block in the tab header (text style only)
 }
 ```
 Timers are in seconds; the mod counts them down locally between updates.

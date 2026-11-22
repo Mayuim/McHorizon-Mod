@@ -5,7 +5,7 @@ The client mod for the **MC Horizons** event server (`play.mchorizons.net`), Min
 It's optional. Players without it see the normal sidebar and tab list.
 
 ## What you get
-Everything shows **while you hold Tab**: the team overview in the middle with the panels on both sides. Let go and you're back to the normal game and the server's sidebar.
+Everything shows **while you hold Tab**: the server's own tab list in the middle, with **your team outlined in gold**, and the panels on both sides. Let go and you're back to the normal game and the server's sidebar.
 (Set `panelsOnlyOnTab` to `false` in the config to keep the side panels on screen all the time.)
 
 **Side panels**
@@ -15,7 +15,7 @@ Everything shows **while you hold Tab**: the team overview in the middle with th
 - **LIVE** (right): this game's team standings, with your team highlighted.
 - **Event info** (bottom right): event name, game number and multiplier, round.
 
-**Team overview** (middle): Every team with its rank, points, this game's points, and members with their skin heads. Your team is outlined in gold, and offline players are grayed out.
+**Optional team overview** (set `replaceTabList` to `true` to use it instead of the server's tab list): Every team with its rank, points, this game's points, and members with their skin heads. Your team is outlined in gold, and offline players are grayed out.
 
 While the panels are up, the server's sidebar is hidden since they show the same info.
 
@@ -26,7 +26,7 @@ While the panels are up, the server's sidebar is hidden since they show the same
 
 ## Settings
 - **F7** turns the whole MC Horizons Tab screen on/off (off = vanilla Tab list) (change it in Controls → Key Binds → MC Horizons).
-- `.minecraft/config/mchorizon.json`: `hudScale` (0.5–2.0), `panelsOnlyOnTab`, `hideSidebar`, `replaceTabList`, and `showProfile` / `showGame` / `showYourTeam` / `showLive` / `showEventInfo`.
+- `.minecraft/config/mchorizon.json`: `hudScale` (0.5–2.0), `panelsOnlyOnTab`, `hideSidebar`, `outlineTeamInTab`, `replaceTabList`, and `showProfile` / `showGame` / `showYourTeam` / `showLive` / `showEventInfo`.
 
 ## How it works
 MCEvents sends the event data over the `mchorizon:hud` plugin channel. See [PROTOCOL.md](PROTOCOL.md).

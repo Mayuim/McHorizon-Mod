@@ -87,6 +87,16 @@ public class HudData {
 		public Integer gamePlace;
 		public Integer gameOf;
 		public List<String> tiedWith = new ArrayList<>();
+		/** Where this team's block is in the server's tab header (server-estimated pixels). */
+		public TabBox tabBox;
+	}
+
+	public static class TabBox {
+		public int line;
+		public int lines;
+		public int x;
+		public int width;
+		public int lineWidth;
 	}
 
 	public Team teamById(String id) {

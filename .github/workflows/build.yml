@@ -20,6 +20,8 @@ jobs:
       - name: Build
         # Retry once: Fabric's maven occasionally drops connections.
         run: ./gradlew build || ./gradlew build
+      - name: Check mixin targets exist in Minecraft
+        run: python3 scripts/check_mixin_targets.py
       - name: Upload mod jar
         uses: actions/upload-artifact@v7
         with:

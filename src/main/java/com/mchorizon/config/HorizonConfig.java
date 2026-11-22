@@ -22,8 +22,12 @@ public class HorizonConfig {
 	public float hudScale = 1.0F;
 	/** Hide the server's sidebar while the panels show the same info. */
 	public boolean hideSidebar = true;
-	/** Show the team overview instead of the normal player list when holding Tab. */
-	public boolean replaceTabList = true;
+	/** Show the mod's own team overview instead of the server's tab list when holding Tab. */
+	public boolean replaceTabList = false;
+	/** Draw a gold outline around your team in the server's tab list. */
+	public boolean outlineTeamInTab = true;
+	/** Bumped when defaults change, so older config files get the new defaults once. */
+	public int configVersion;
 	public boolean showProfile = true;
 	public boolean showGame = true;
 	public boolean showYourTeam = true;
@@ -44,6 +48,12 @@ public class HorizonConfig {
 			} catch (Exception ignored) {
 				// keep defaults
 			}
+		}
+		if (instance.configVersion < 2) {
+			// v2: keep the server's tab list and outline your team instead of replacing it
+			instance.replaceTabList = false;
+			instance.outlineTeamInTab = true;
+			instance.configVersion = 2;
 		}
 		if (instance.hudScale < 0.5F || instance.hudScale > 2.0F) {
 			instance.hudScale = 1.0F;
