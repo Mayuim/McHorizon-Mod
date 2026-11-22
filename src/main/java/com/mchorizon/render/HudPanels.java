@@ -54,9 +54,6 @@ public final class HudPanels {
 		HudData.You you = d.you;
 		boolean hasTier = you.tier != null && !you.tier.isEmpty();
 		boolean hasStats = you.events != null;
-		if (!hasTier && !hasStats) {
-			return y - 4;
-		}
 		int rows = 2 + (hasStats ? 2 : 0);
 		int h = Ui.HEADER + 3 + rows * Ui.ROW + 3;
 		int cy = Ui.panel(g, x, y, W, h, "PROFILE", 0xFFFF77DD);
