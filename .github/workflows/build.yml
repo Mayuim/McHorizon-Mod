@@ -1,0 +1,33 @@
+# Builds the mod on every push. Download the jar from the run's "Artifacts" section.
+name: build
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: Build
+        # Retry once: Fabric's maven occasionally drops connections.
+        run: ./gradlew build || ./gradlew build
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v7
+        with:
+          name: mchorizon-mc1.21.11
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+      - name: Print API signatures (debug)
+        if: always()
+        continue-on-error: true
+        run: python3 scripts/probe.py .
