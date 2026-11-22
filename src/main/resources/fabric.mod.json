@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "mchorizon",
 	"version": "${version}",
-	"name": "MC Horizons",
+	"name": "MCHorizons",
 	"description": "The MC Horizons event HUD: profile, game, team and live panels, plus the team overview on Tab.",
 	"authors": ["Mayuim"],
 	"contact": {
