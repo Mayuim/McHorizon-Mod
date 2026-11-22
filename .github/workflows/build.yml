@@ -27,7 +27,3 @@ jobs:
           path: |
             build/libs/*.jar
             !build/libs/*-sources.jar
-      - name: Print API signatures (debug)
-        if: always()
-        continue-on-error: true
-        run: python3 scripts/probe.py .
