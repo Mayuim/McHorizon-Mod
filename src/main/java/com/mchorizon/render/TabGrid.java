@@ -14,6 +14,8 @@ import java.util.UUID;
 public final class TabGrid {
 	private static final int CARD_W = 168;
 	private static final int GAP = 4;
+	/** Width of the two-column grid. */
+	public static final int WIDTH = CARD_W * 2 + GAP + 8;
 	private static final int MEMBER_ROW = 10;
 
 	private TabGrid() {}

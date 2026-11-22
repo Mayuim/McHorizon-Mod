@@ -45,18 +45,28 @@ public class HorizonClient implements ClientModInitializer {
 			}
 		});
 
-		// Always-on panels
+		// Everything shows while holding Tab: team grid in the middle, panels on the sides
+		// (like the MCC tab screen). Let go and you're back to the normal game + server sidebar.
 		HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(MOD_ID, "panels"), (g, delta) -> {
-			if (Minecraft.getInstance().options.keyPlayerList.isDown() && showingTabGrid()) {
-				return; // the Tab overview covers the screen; don't draw panels underneath it
+			HorizonConfig c = HorizonConfig.get();
+			if (!c.hudEnabled || HudState.get() == null) {
+				return;
 			}
-			scaled(g, HudPanels::render);
+			if (c.panelsOnlyOnTab && !tabHeld()) {
+				return;
+			}
+			scaled(g, (gg, w, h) -> {
+				// Leave room for the grid in the middle; on very narrow screens show just the grid.
+				if (!tabHeld() || !showingTabGrid() || w >= TabGrid.WIDTH + 2 * HudPanels.WIDTH + 24) {
+					HudPanels.render(gg, w, h);
+				}
+			});
 		});
 
 		// Tab: team overview instead of the player list (only on servers sending MC Horizons data)
 		HudElementRegistry.replaceElement(VanillaHudElements.PLAYER_LIST, vanilla -> (g, delta) -> {
 			if (showingTabGrid()) {
-				if (Minecraft.getInstance().options.keyPlayerList.isDown()) {
+				if (tabHeld()) {
 					scaled(g, TabGrid::render);
 				}
 				return;
@@ -64,14 +74,19 @@ public class HorizonClient implements ClientModInitializer {
 			vanilla.render(g, delta);
 		});
 
-		// The panels show the same info as the server's sidebar, so hide it while they're up.
+		// While the panels are on screen they show the same info as the server's sidebar, so hide it then.
 		HudElementRegistry.replaceElement(VanillaHudElements.SCOREBOARD, vanilla -> (g, delta) -> {
 			HorizonConfig c = HorizonConfig.get();
-			if (c.hudEnabled && c.hideSidebar && HudState.get() != null) {
+			boolean panelsUp = c.hudEnabled && HudState.get() != null && (!c.panelsOnlyOnTab || tabHeld());
+			if (panelsUp && c.hideSidebar) {
 				return;
 			}
 			vanilla.render(g, delta);
 		});
+	}
+
+	private static boolean tabHeld() {
+		return Minecraft.getInstance().options.keyPlayerList.isDown();
 	}
 
 	private static boolean showingTabGrid() {

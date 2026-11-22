@@ -15,7 +15,8 @@ import java.util.List;
  *   bottom right: EVENT info
  */
 public final class HudPanels {
-	private static final int W = 132;
+	public static final int WIDTH = 132;
+	private static final int W = WIDTH;
 
 	private HudPanels() {}
 

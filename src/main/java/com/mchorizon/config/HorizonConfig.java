@@ -16,6 +16,8 @@ public class HorizonConfig {
 	private static HorizonConfig instance = new HorizonConfig();
 
 	public boolean hudEnabled = true;
+	/** true = panels only while holding Tab (like MCC). false = panels always on screen. */
+	public boolean panelsOnlyOnTab = true;
 	/** Size of the panels (1.0 = normal GUI scale). */
 	public float hudScale = 1.0F;
 	/** Hide the server's sidebar while the panels show the same info. */
