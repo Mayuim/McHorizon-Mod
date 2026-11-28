@@ -12,21 +12,25 @@ import org.joml.Vector3f;
  * uses these to put the hands on the grips and to line the sights up with the middle of the screen.
  */
 public enum GunKind {
-	//           display translation (px)   yaw  scale  right-hand grip             left hand                  sight (rifle: the red dot)
-	RIFLE (new Vector3f(1.5F, 3F, 0F),   12F, 0.5F,  new Vector3f(8F, 3.2F, 11.2F), new Vector3f(8F, 4.2F, -4F)  , new Vector3f(8F, 13.95F, 5.45F)),
-	PISTOL(new Vector3f(-1.5F, 4F, -1F), 15F, 0.65F, new Vector3f(8F, 4.3F, 8.2F),  new Vector3f(5.4F, 3.8F, 8.0F), new Vector3f(8F, 11.6F, 8.2F));
+	// RIFLE = the SaturnStudio paintball marker: grip, vertical foregrip, and you look over the hopper when aiming (no dot sight)
+	//           display translation (px)   yaw  scale  right-hand grip              left hand                     sight point                    dot sight
+	RIFLE (new Vector3f(2F, 3F, 0F),     10F, 0.5F,  new Vector3f(8F, 3.0F, 11.2F), new Vector3f(8F, 1.7F, -0.25F), new Vector3f(8F, 19.5F, 5F),  false),
+	PISTOL(new Vector3f(-1.5F, 4F, -1F), 15F, 0.65F, new Vector3f(8F, 4.3F, 8.2F),  new Vector3f(5.4F, 3.8F, 8.0F),  new Vector3f(8F, 11.6F, 8.2F), false);
 
 	final Vector3f translation;
 	final float yaw, scale;
 	final Vector3f grip, support, sight;
+	/** Has a red dot: the crosshair hides while aiming. */
+	public final boolean dotSight;
 
-	GunKind(Vector3f translation, float yaw, float scale, Vector3f grip, Vector3f support, Vector3f sight) {
+	GunKind(Vector3f translation, float yaw, float scale, Vector3f grip, Vector3f support, Vector3f sight, boolean dotSight) {
 		this.translation = translation;
 		this.yaw = yaw;
 		this.scale = scale;
 		this.grip = grip;
 		this.support = support;
 		this.sight = sight;
+		this.dotSight = dotSight;
 	}
 
 	/** Where a model point ends up after the item's first-person display transform (before the hand transform). */

@@ -117,6 +117,11 @@ public final class GunState {
 		equip = Mth.clamp(equip + 1F / Math.max(1F, GunTuning.equipTicks), 0F, 1F);
 	}
 
+	/** Whether the held gun has a dot sight (then the crosshair hides while aiming). */
+	public static boolean dotSight() {
+		return heldKind != null && heldKind.dotSight;
+	}
+
 	/** How far into aiming you are right now (0..1, eased). */
 	public static float aimAmount(float partial) {
 		return heldKind == null ? 0F : smooth(lerp(partial, aimO, aim));

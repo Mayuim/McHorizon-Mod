@@ -5,7 +5,7 @@ The **required** client mod for the **MC Horizons** event server (`play.mchorizo
 ## What it does
 Paint guns look and feel like real first-person guns:
 - **Your own skin's arms** hold the gun: right hand on the grip, left hand on the handguard.
-- **Aim down sights**: left-click (or sneak) and the gun glides up so the rifle's red dot sight (or the pistol's iron sights) sits in the middle of your screen, with a smooth zoom and no crosshair in the way.
+- **Aim down sights**: left-click (or sneak) and the gun glides up and you look right over the hopper, with a smooth zoom.
 - **Recoil** kick on every shot, softer while aiming.
 - **Reload**: the gun tilts and your left hand grabs a fresh paint pod.
 - **Sprint carry**, a quick **raise** when you switch guns, and a little breathing sway.

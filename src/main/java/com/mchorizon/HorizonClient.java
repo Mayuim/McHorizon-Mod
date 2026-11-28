@@ -32,9 +32,9 @@ public class HorizonClient implements ClientModInitializer {
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> GunState.clear());
 		ClientTickEvents.END_CLIENT_TICK.register(GunState::tick);
 
-		// no crosshair while aiming down sights: the sight (red dot) is your crosshair
+		// guns with a red dot: no crosshair while aiming, the dot is your crosshair
 		HudElementRegistry.replaceElement(VanillaHudElements.CROSSHAIR, vanilla -> (g, delta) -> {
-			if (GunState.aimAmount(delta.getGameTimeDeltaPartialTick(false)) >= GunTuning.hideCrosshairAt) {
+			if (GunState.dotSight() && GunState.aimAmount(delta.getGameTimeDeltaPartialTick(false)) >= GunTuning.hideCrosshairAt) {
 				return;
 			}
 			vanilla.render(g, delta);
