@@ -31,6 +31,8 @@ public final class GunTuning {
 	// shoulders the arms come from
 	public static float rightShoulderX = 0.75F, rightShoulderY = -1.0F, rightShoulderZ = 0.1F;
 	public static float leftShoulderX = -0.25F, leftShoulderY = -0.95F, leftShoulderZ = 0.05F;
+	/** Arm thickness (1 = vanilla, which is fatter than the whole gun) and length (long enough to reach off screen). */
+	public static float armThickness = 0.55F, armLength = 1.6F;
 	/** Twist of each arm around itself. */
 	public static float rightArmRoll = 0F, leftArmRoll = 0F;
 	// recoil

@@ -13,8 +13,8 @@ import org.joml.Vector3f;
  */
 public enum GunKind {
 	//           display translation (px)   yaw  scale  right-hand grip             left hand                  sight line
-	RIFLE (new Vector3f(1.5F, 3F, 0F),   12F, 0.5F,  new Vector3f(8F, 3.2F, 11.2F), new Vector3f(8F, 5.9F, -3.5F), new Vector3f(8F, 12.4F, 11F)),
-	PISTOL(new Vector3f(-1.5F, 4F, -1F), 15F, 0.65F, new Vector3f(8F, 4.3F, 8.2F),  new Vector3f(6.2F, 3.8F, 8.4F), new Vector3f(8F, 11.1F, 8.2F));
+	RIFLE (new Vector3f(1.5F, 3F, 0F),   12F, 0.5F,  new Vector3f(8F, 3.2F, 11.2F), new Vector3f(8F, 4.2F, -4F)  , new Vector3f(8F, 12.4F, 11F)),
+	PISTOL(new Vector3f(-1.5F, 4F, -1F), 15F, 0.65F, new Vector3f(8F, 4.3F, 8.2F),  new Vector3f(5.4F, 3.8F, 8.0F), new Vector3f(8F, 11.1F, 8.2F));
 
 	final Vector3f translation;
 	final float yaw, scale;

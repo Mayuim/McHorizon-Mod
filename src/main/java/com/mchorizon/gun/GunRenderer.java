@@ -127,6 +127,8 @@ public final class GunRenderer {
 		pose.pushPose();
 		pose.translate(hand.x, hand.y, hand.z);
 		pose.mulPose(q);
+		// thinner than vanilla so the hand wraps the grip instead of swallowing the gun
+		pose.scale(GunTuning.armThickness, GunTuning.armLength, GunTuning.armThickness);
 		pose.translate(-handX, -handY, 0F);
 		// the vanilla first-person arm leans 0.1 rad outward; undo that so the hand lands on the grip
 		pose.translate(pivotX, pivotY, 0F);
