@@ -23,7 +23,7 @@ jobs:
       - name: Check mixin targets exist in Minecraft
         run: python3 scripts/check_mixin_targets.py
       - name: Dump signatures (temporary)
-        run: python3 scripts/dump_sigs.py net.minecraft.client.renderer.ItemInHandRenderer net.minecraft.client.renderer.entity.player.AvatarRenderer net.minecraft.client.renderer.entity.player.PlayerRenderer net.minecraft.client.renderer.item.ItemModelResolver net.minecraft.client.renderer.item.ItemStackRenderState net.minecraft.client.renderer.SubmitNodeCollector net.minecraft.client.renderer.entity.EntityRenderDispatcher net.minecraft.client.player.AbstractClientPlayer net.minecraft.client.renderer.GameRenderer net.minecraft.world.item.component.CustomData || true
+        run: python3 scripts/dump_sigs.py com.mojang.blaze3d.vertex.PoseStack com.mojang.blaze3d.vertex.PoseStack\$Pose net.minecraft.world.entity.player.PlayerSkin net.minecraft.core.ClientAsset\$Texture net.minecraft.core.ClientAsset\$ResourceTexture net.minecraft.nbt.CompoundTag com.mojang.math.Axis net.minecraft.world.entity.player.PlayerModelType net.minecraft.client.renderer.item.ItemStackRenderState\$LayerRenderState net.minecraft.client.renderer.block.model.ItemTransform net.minecraft.client.Camera || true
       - name: Upload mod jar
         uses: actions/upload-artifact@v7
         with:
