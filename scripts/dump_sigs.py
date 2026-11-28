@@ -17,4 +17,4 @@ for base in [Path.home() / ".gradle", Path(".gradle")]:
 print("JAR", jar)
 for c in CLASSES:
     print("=====", c)
-    print(subprocess.run(["javap", "-p", "-cp", str(jar), c], capture_output=True, text=True).stdout)
+    print(subprocess.run(["javap", "-c", "-p", "-cp", str(jar), c], capture_output=True, text=True).stdout)
