@@ -3,7 +3,7 @@
 	"id": "mchorizon",
 	"version": "${version}",
 	"name": "MCHorizons",
-	"description": "The MC Horizons event HUD: profile, game, team and live panels, plus the team overview on Tab.",
+	"description": "Required client mod for MC Horizons: real first-person paint guns held in your own skin's arms, with aim down sights, recoil and reload animations.",
 	"authors": [
 		"Mayuim"
 	],
