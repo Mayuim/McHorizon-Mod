@@ -22,8 +22,6 @@ jobs:
         run: ./gradlew build || ./gradlew build
       - name: Check mixin targets exist in Minecraft
         run: python3 scripts/check_mixin_targets.py
-      - name: Dump signatures (temporary)
-        run: python3 scripts/dump_sigs.py net.minecraft.client.renderer.entity.player.AvatarRenderer net.minecraft.client.renderer.ItemInHandRenderer net.minecraft.client.renderer.block.model.ItemTransform > /tmp/code.txt; grep -n "" /tmp/code.txt | sed -n "1,99999p" | grep -A140 -E "void (renderRightHand|renderLeftHand|renderHand|renderPlayerArm|apply)\\(" | head -700 || true
       - name: Upload mod jar
         uses: actions/upload-artifact@v7
         with:

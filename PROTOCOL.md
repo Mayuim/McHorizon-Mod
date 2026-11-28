@@ -1,25 +1,19 @@
-# MC Horizons HUD protocol (v1)
+# MC Horizons gun protocol (v1)
 
-MCEvents → mod, plugin channel **`mchorizon:hud`**, once per second, only to players whose client
-registered the channel (the mod does this automatically). The message body is UTF-8 JSON, no length prefix.
-Sent by `dev.mcevents.display.HorizonHud` in [MCEVENT](https://github.com/Mayuim/MCEVENT).
+MCEvents → mod, plugin channel **`mchorizon:gun`**. The message body is UTF-8 JSON, no length prefix.
+Sent by `dev.mcevents.game.paintball.GunSync` in [MCEVENT](https://github.com/Mayuim/MCEVENT), only to
+players whose client registered the channel (the mod does this automatically, and the server uses it to
+check the mod is installed).
 
-```jsonc
-{
-  "v": 1,
-  "event": { "name", "title", "active", "paused", "mini", "phase", "phaseId",
-             "round", "rounds", "multiplier", "timeLeft" },
-  "game":  { "active", "name", "color": "#RRGGBB", "map", "round", "rounds", "timeLeft" },
-  "teams": [ { "id", "name", "color", "hidden", "rank", "points", "gamePoints", "index", "icon": <text component JSON>,
-               "members": [ { "uuid", "name", "online", "points" } ] } ],
-  "live":  [ { "id", "points" } ],            // this game's standings, best first
-  "you":   { "name", "spectator", "points", "place", "of",
-             "gamePoints", "gamePlace", "gameOf",            // only during a game
-             "tier", "events", "lifetime", "bestPlace", "overallRank", "overallOf" },  // from StatsStore
-  "team":  { ...team fields..., "of", "behindTeam", "behindBy", "leadTeam", "leadBy",
-             "gamePoints", "gamePlace", "gameOf", "tiedWith": ["teamId"],
-             "tabBox": { "line", "lines", "x", "width", "lineWidth" } }   // team block in the tab header (text style only)
-}
-```
-Timers are in seconds; the mod counts them down locally between updates.
-Adding fields is safe (older mods ignore them). Bump `v` only for breaking changes.
+Every field is optional; a message can carry several.
+
+| Field | Meaning |
+|---|---|
+| `"aim": true/false` | You're aiming down sights (left-click toggle). Sneaking with a gun also aims on the client. |
+| `"shot": true` | You just fired: play the recoil kick. |
+| `"reload": <ticks>` | A reload started that lasts this many ticks. `0` = reload finished or cancelled. |
+| `"left": <ticks>` | With `reload`: ticks still to go (for a reload already in progress). |
+| `"reset": true` | Forget everything (sent when you leave a game). |
+
+Paint guns are recognized by the item tag MCEvents puts on them:
+`minecraft:custom_data` → `PublicBukkitValues` → `"mcevents:paint_gun": "RIFLE" | "PISTOL"`.
