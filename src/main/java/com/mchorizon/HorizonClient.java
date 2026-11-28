@@ -11,6 +11,8 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.chat.Component;
 
@@ -29,6 +31,14 @@ public class HorizonClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(GunPayload.TYPE, (payload, context) -> GunState.handle(payload.json()));
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> GunState.clear());
 		ClientTickEvents.END_CLIENT_TICK.register(GunState::tick);
+
+		// no crosshair while aiming down sights: the sight (red dot) is your crosshair
+		HudElementRegistry.replaceElement(VanillaHudElements.CROSSHAIR, vanilla -> (g, delta) -> {
+			if (GunState.aimAmount(delta.getGameTimeDeltaPartialTick(false)) >= GunTuning.hideCrosshairAt) {
+				return;
+			}
+			vanilla.render(g, delta);
+		});
 
 		// /gunpose: tune how the guns and arms sit, live
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registry) -> dispatcher.register(

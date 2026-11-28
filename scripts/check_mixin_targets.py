@@ -13,6 +13,8 @@ CHECKS = [
      "public void renderItem(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, "
      "net.minecraft.world.item.ItemDisplayContext, com.mojang.blaze3d.vertex.PoseStack, "
      "net.minecraft.client.renderer.SubmitNodeCollector, int);"),
+    ("net.minecraft.client.player.AbstractClientPlayer",
+     "public float getFieldOfViewModifier(boolean, float);"),
 ]
 
 jars = []

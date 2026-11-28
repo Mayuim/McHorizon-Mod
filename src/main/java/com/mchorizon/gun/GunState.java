@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
  */
 public final class GunState {
 	private static boolean serverAim;
+	private static int zoomLevel;
 	private static int reloadTotal, reloadLeft;
 	private static boolean pendingShot;
 	private static GunKind heldKind;
@@ -31,6 +32,9 @@ public final class GunState {
 			JsonObject o = JsonParser.parseString(json).getAsJsonObject();
 			if (o.has("aim")) {
 				serverAim = o.get("aim").getAsBoolean();
+			}
+			if (o.has("zoom")) {
+				zoomLevel = Math.max(0, o.get("zoom").getAsInt());
 			}
 			if (o.has("shot") && o.get("shot").getAsBoolean()) {
 				pendingShot = true;
@@ -111,6 +115,20 @@ public final class GunState {
 		boolean sprinting = p.isSprinting() && !wantAim && !reloading;
 		sprint = Mth.clamp(sprint + (sprinting ? 0.2F : -0.25F), 0F, 1F);
 		equip = Mth.clamp(equip + 1F / Math.max(1F, GunTuning.equipTicks), 0F, 1F);
+	}
+
+	/** How far into aiming you are right now (0..1, eased). */
+	public static float aimAmount(float partial) {
+		return heldKind == null ? 0F : smooth(lerp(partial, aimO, aim));
+	}
+
+	/** FOV multiplier for aiming down sights: eases in with the gun. */
+	public static float fovMultiplier() {
+		if (heldKind == null || zoomLevel <= 0) {
+			return 1F;
+		}
+		float zoomed = 1F / (1F + GunTuning.zoomPerLevel * zoomLevel);
+		return Mth.lerp(smooth(aim), 1F, zoomed);
 	}
 
 	static float lerp(float partial, float o, float n) {

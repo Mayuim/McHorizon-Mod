@@ -25,7 +25,11 @@ public final class GunTuning {
 	// hip-fire position of the gun (the vanilla hand spot)
 	public static float hipX = 0.56F, hipY = -0.52F, hipZ = -0.72F;
 	// aim down sights: where the sight lands (0,0 = the middle of the screen)
-	public static float aimX = 0F, aimY = -0.025F, aimZ = -0.42F;
+	public static float aimX = 0F, aimY = 0F, aimZ = -0.42F;
+	/** Zoom while aiming: view = 1 / (1 + zoomPerLevel * level), level comes from the server (rifle 2, pistol 1, more with a scope). */
+	public static float zoomPerLevel = 0.25F;
+	/** Hide the crosshair once you're this far into aiming (0..1, above 1 = never hide). */
+	public static float hideCrosshairAt = 0.6F;
 	/** Ticks to bring the gun up to your eye. */
 	public static float aimTicks = 4F;
 	// shoulders the arms come from
